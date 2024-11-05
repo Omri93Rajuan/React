@@ -1,17 +1,15 @@
 import React from "react";
 
 interface PropsInterface {
-  name: string;
-  email: string;
+  propsFromParent: (name: string) => void | undefined;
 }
 
-export default function Main({ name, email }: PropsInterface) {
+export default function Main(props: PropsInterface) {
   return (
     <>
-      <div style={{ minHeight: "92.5vh" }}>
-        <h1>{name}</h1>
-        <h1>{email}</h1>
-      </div>
+      <div style={{ minHeight: "10vh" }}></div>
+
+      <button onClick={() => props.propsFromParent("Meni")}>Click me</button>
     </>
   );
 }
