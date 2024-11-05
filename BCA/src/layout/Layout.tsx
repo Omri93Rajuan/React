@@ -11,7 +11,7 @@ export default function Layout() {
     <>
       <Header />
       <Brother name={name} />
-      <Main propsFromParent={setName} />
+      <Main mikiIsTheBestStudentInTheWorld={setName} />
       <Footer />
     </>
   );

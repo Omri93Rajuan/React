@@ -1,15 +1,16 @@
 import React from "react";
 
 interface PropsInterface {
-  propsFromParent: (name: string) => void | undefined;
+  mikiIsTheBestStudentInTheWorld: (name: string) => void;
 }
 
 export default function Main(props: PropsInterface) {
   return (
     <>
       <div style={{ minHeight: "10vh" }}></div>
-
-      <button onClick={() => props.propsFromParent("Meni")}>Click me</button>
+      <button onClick={() => props.mikiIsTheBestStudentInTheWorld("Meni")}>
+        Click me
+      </button>
     </>
   );
 }
