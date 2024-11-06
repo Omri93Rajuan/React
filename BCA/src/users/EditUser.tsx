@@ -25,9 +25,10 @@ export default function EditUser(props: Props) {
         onChange={(e) => setusername(e.target.value)}
       />
       ;
-      <button
-        onClick={() => props.editUser({ ...props.user, username })}
-      ></button>
+      <button onClick={() => props.editUser({ ...props.user, username })}>
+        {" "}
+        Save
+      </button>
     </>
   );
 }

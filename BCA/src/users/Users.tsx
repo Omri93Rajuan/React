@@ -14,6 +14,18 @@ interface User {
 export default function Users() {
   const [users, setusers] = useState<User[]>([]);
 
+  useEffect(() => {
+    setusers([
+      {
+        id: v4(),
+        username: "string",
+        email: "string",
+        age: 5,
+        img: "string",
+      },
+    ]);
+  }, []);
+
   const addNewUser = (newUser: User) => {
     newUser.id = v4();
     setusers([...users, newUser]);
