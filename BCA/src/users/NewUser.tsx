@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 interface User {
   username: string;
@@ -37,7 +37,7 @@ export default function NewUser(props: Props) {
           <div className="form-group">
             <label htmlFor="userName">User Name</label>
             <input
-              name="userName"
+              id="userName"
               type="text"
               value={username}
               placeholder="Enter your User Name"
@@ -50,7 +50,7 @@ export default function NewUser(props: Props) {
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
-              name="email"
+              id="email"
               type="text"
               value={email}
               placeholder="Enter your Email"
@@ -63,7 +63,7 @@ export default function NewUser(props: Props) {
           <div className="form-group">
             <label htmlFor="img">Img</label>
             <input
-              name="img"
+              id="img"
               type="text"
               value={img}
               placeholder="Enter your Pic"
@@ -76,7 +76,7 @@ export default function NewUser(props: Props) {
           <div className="form-group">
             <label htmlFor="age">Age</label>
             <input
-              name="age"
+              id="age"
               type="number"
               min={0}
               value={age}

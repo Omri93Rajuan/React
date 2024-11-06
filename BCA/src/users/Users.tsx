@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import NewUser from "./NewUser";
+import DisplayUsers from "./DisplayUsers";
 
 interface User {
   id?: string;
@@ -18,10 +19,20 @@ export default function Users() {
     setusers([...users, newUser]);
   };
 
-  // const deleteUser = () => { }
+  const deleteUser = (id: string) => {
+    setusers(users.filter((user) => user.id !== id));
+  };
+  const UpdateUser = (user: User) => {
+    console.log(user);
+  };
 
   return (
     <>
+      <DisplayUsers
+        users={users}
+        deleteUser={deleteUser}
+        updateUser={UpdateUser}
+      />
       <NewUser addUser={addNewUser} />
     </>
   );
