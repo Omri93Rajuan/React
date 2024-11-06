@@ -17,37 +17,47 @@ export default function NewUser(props: Props) {
   const [age, setAge] = useState(0);
   const [img, setImg] = useState("");
 
-  const handleSubmit = () => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
     props.addUser({
       username,
       email,
       age,
       img,
     });
+    setUsername("");
+    setEmail("");
+    setAge(0);
+    setImg("");
   };
   return (
     <>
       <div className="form-container">
         <form onSubmit={handleSubmit}>
           <div className="form-group">
-            <label htmlFor="userName">UserName</label>
+            <label htmlFor="userName">User Name</label>
             <input
               name="userName"
               type="text"
+              value={username}
+              placeholder="Enter your User Name"
               onChange={(event) => {
                 setUsername(event.target.value);
               }}
             />
           </div>
+
           <div className="form-group">
             <label htmlFor="email">Email</label>
             <input
               name="email"
               type="text"
+              value={email}
+              placeholder="Enter your Email"
               onChange={(event) => {
                 setEmail(event.target.value);
               }}
-            />{" "}
+            />
           </div>
 
           <div className="form-group">
@@ -55,21 +65,28 @@ export default function NewUser(props: Props) {
             <input
               name="img"
               type="text"
+              value={img}
+              placeholder="Enter your Pic"
               onChange={(event) => {
                 setImg(event.target.value);
               }}
             />
           </div>
+
           <div className="form-group">
             <label htmlFor="age">Age</label>
             <input
               name="age"
-              type="text"
+              type="number"
+              min={0}
+              value={age}
+              placeholder="0"
               onChange={(event) => {
                 setAge(Number(event.target.value));
               }}
             />
           </div>
+
           <button type="submit">Add New User</button>
         </form>
       </div>

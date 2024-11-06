@@ -18,8 +18,7 @@ export default function Users() {
     setusers([...users, newUser]);
   };
 
-  // const deleteUser = () => {
-  // }
+  // const deleteUser = () => { }
 
   return (
     <>
