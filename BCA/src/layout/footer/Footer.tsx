@@ -1,5 +1,9 @@
 import React from "react";
 
 export default function Footer() {
-  return <div style={{ backgroundColor: "#F2C36B" }}>Footer</div>;
+  return (
+    <footer>
+      <p>Created by O.R &copy; {new Date().getFullYear()}</p>
+    </footer>
+  );
 }

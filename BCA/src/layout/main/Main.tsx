@@ -1,16 +1,12 @@
 import React from "react";
+import Users from "../../users/Users";
 
-interface PropsInterface {
-  mikiIsTheBestStudentInTheWorld: (name: string) => void;
-}
-
-export default function Main(props: PropsInterface) {
+export default function Main() {
   return (
     <>
-      <div style={{ minHeight: "10vh" }}></div>
-      <button onClick={() => props.mikiIsTheBestStudentInTheWorld("Meni")}>
-        Click me
-      </button>
+      <main>
+        <Users />
+      </main>
     </>
   );
 }

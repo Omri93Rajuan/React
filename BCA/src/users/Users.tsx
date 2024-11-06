@@ -1,20 +1,29 @@
 import React, { useState } from "react";
-import NewUser from "./newUser";
+import { v4 } from "uuid";
+import NewUser from "./NewUser";
 
 interface User {
-  userName: string;
+  id?: string;
+  username: string;
+  email: string;
+  age: number;
+  img: string;
 }
+
 export default function Users() {
   const [users, setusers] = useState<User[]>([]);
 
-  const addNewUser = (newUser: User): void => {
+  const addNewUser = (newUser: User) => {
+    newUser.id = v4();
     setusers([...users, newUser]);
   };
-  console.log(users);
+
+  // const deleteUser = () => {
+  // }
+
   return (
     <>
-      <div>Users</div>
-      <NewUser addNewUser={addNewUser} />
+      <NewUser addUser={addNewUser} />
     </>
   );
 }
