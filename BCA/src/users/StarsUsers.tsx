@@ -1,7 +1,4 @@
-import React, { useState } from "react";
-import NewUser from "./NewUser";
-import EditUser from "./EditUser";
-import StarsUsers from "./StarsUsers";
+import React, { useEffect, useState } from "react";
 interface User {
   id?: string;
   username: string;
@@ -9,24 +6,14 @@ interface User {
   age: number;
   img: string;
 }
-
 interface Props {
   users: User[];
-  deleteUser: (id: string) => void;
-  updateUser: (user: User) => void;
-  addNewStar: (user: User) => void;
 }
 
-export default function DisplayUsers({
-  users,
-  deleteUser,
-  updateUser,
-  addNewStar,
-}: Props) {
-  const [flag, setFlag] = useState(false);
-
+export default function StarsUsers({ users }: Props) {
   return (
     <>
+      <h1>הכוכבים של מיקי!</h1>
       <div className="card-list">
         {users.map((user) => (
           <div key={user.id} className="card">
@@ -38,9 +25,6 @@ export default function DisplayUsers({
               alt={`${user.username}'s avatar`}
               style={{ width: "100px", height: "100px" }}
             />
-            <button onClick={() => setFlag(true)}>Edit</button>
-            {flag && <EditUser editUser={updateUser} user={user} />}
-            <button onClick={() => addNewStar(user)}>AAAA</button>
           </div>
         ))}
       </div>

@@ -15,7 +15,8 @@ export default function EditUser(props: Props) {
 
   useEffect(() => {
     setusername(props.user.username);
-  }, []);
+    console.log("היי אחי, התרנדרת היום?");
+  }, [username]);
 
   return (
     <>
@@ -24,7 +25,7 @@ export default function EditUser(props: Props) {
         value={username}
         onChange={(e) => setusername(e.target.value)}
       />
-      ;
+
       <button onClick={() => props.editUser({ ...props.user, username })}>
         {" "}
         Save

@@ -2,7 +2,7 @@ import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import NewUser from "./NewUser";
 import DisplayUsers from "./DisplayUsers";
-
+import StarsUsers from "./StarsUsers";
 interface User {
   id?: string;
   username: string;
@@ -13,17 +13,13 @@ interface User {
 
 export default function Users() {
   const [users, setusers] = useState<User[]>([]);
+  const [stars, setStars] = useState<User[]>([]);
 
   useEffect(() => {
-    setusers([
-      {
-        id: v4(),
-        username: "string",
-        email: "string",
-        age: 5,
-        img: "string",
-      },
-    ]);
+    fetch("/data.json")
+      .then((response) => response.json())
+      .then((data) => setusers(data))
+      .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
   const addNewUser = (newUser: User) => {
@@ -37,14 +33,18 @@ export default function Users() {
   const UpdateUser = (user: User) => {
     console.log(user);
   };
-
+  const addNewStar = (newStar: User) => {
+    setStars([...stars, newStar]);
+  };
   return (
     <>
       <DisplayUsers
         users={users}
         deleteUser={deleteUser}
         updateUser={UpdateUser}
+        addNewStar={addNewStar}
       />
+      {stars && <StarsUsers users={stars} />}
       <NewUser addUser={addNewUser} />
     </>
   );
