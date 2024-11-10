@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink, useNavigate } from "react-router-dom";
+import { Link, NavLink, useNavigate, useParams } from "react-router-dom";
 
 interface User {
   id?: string;
@@ -15,13 +15,14 @@ interface Props {
 }
 
 const EditUser: React.FC<Props> = ({ user, editUser }: Props) => {
+  const { id } = useParams();
+
   const navigate = useNavigate();
 
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState(0);
   const [img, setImg] = useState("");
-  const id: string | undefined = user.id;
 
   useEffect(() => {
     setUsername(user.username);

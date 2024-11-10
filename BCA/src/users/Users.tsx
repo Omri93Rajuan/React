@@ -49,7 +49,6 @@ export default function Users() {
   };
   return (
     <>
-      {/* <div>{<StarsUsers users={stars} />}</div> */}
       <Routes>
         <Route
           path="/"
@@ -64,7 +63,7 @@ export default function Users() {
         />
         <Route path="/adduser" element={<NewUser addUser={addNewUser} />} />
         <Route
-          path="/edit"
+          path="/edit/:id"
           element={<EditUser user={user!} editUser={UpdateUser} />}
         />
       </Routes>

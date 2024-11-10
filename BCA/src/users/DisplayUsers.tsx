@@ -50,7 +50,7 @@ export default function DisplayUsers({
                   updateUser(user);
                 }}
               >
-                <NavLink to={"/users/edit"}>Edit</NavLink>
+                <NavLink to={`/users/edit/${user.id}`}>Edit</NavLink>
               </button>
 
               <button onClick={() => addNewStar(user)} className="star-button">
