@@ -6,8 +6,8 @@ export default function AppRouter() {
     <>
       <Routes>
         <Route path="/" element={<h1>Welcome Miki to the CLASS!!!</h1>} />
-
         <Route path="/users/*" element={<Users />} />
+        <Route path="*" element={<h1>404 Who AM I?</h1>} />
       </Routes>
     </>
   );

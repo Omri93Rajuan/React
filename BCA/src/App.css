@@ -216,3 +216,8 @@ button:active {
     grid-template-columns: 1fr; /* כרטיס אחד בשורה */
   }
 }
+ul{
+  list-style-type: none;
+  display: flex;
+  justify-content: space-evenly;
+}
