@@ -2,8 +2,8 @@ import React, { useEffect, useState } from "react";
 import { v4 } from "uuid";
 import NewUser from "./NewUser";
 import DisplayUsers from "./DisplayUsers";
-import StarsUsers from "./StarsUsers";
 import { Route, Routes } from "react-router-dom";
+import StarsUsers from "./StarsUsers";
 interface User {
   id?: string;
   username: string;
@@ -39,6 +39,7 @@ export default function Users() {
   };
   return (
     <>
+      {/* <div>{<StarsUsers users={stars} />}</div> */}
       <Routes>
         <Route
           path="/"

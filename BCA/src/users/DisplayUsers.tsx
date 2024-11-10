@@ -3,6 +3,7 @@ import NewUser from "./NewUser";
 import EditUser from "./EditUser";
 import StarsUsers from "./StarsUsers";
 import { NavLink } from "react-router-dom";
+
 interface User {
   id?: string;
   username: string;
@@ -28,22 +29,34 @@ export default function DisplayUsers({
 
   return (
     <>
-      <NavLink to={"/users/adduser"}>Add user</NavLink>
+      <NavLink to={"/users/adduser"} className="add-user-link">
+        Add user
+      </NavLink>
 
       <div className="card-list">
         {users.map((user) => (
-          <div key={user.id} className="card">
-            <h3>{user.username}</h3>
-            <p>Email: {user.email}</p>
-            <p>Age: {user.age}</p>
+          <div key={user.id} className="user-card">
             <img
               src={user.img}
               alt={`${user.username}'s avatar`}
-              style={{ width: "100px", height: "100px" }}
+              className="user-avatar"
             />
-            <button onClick={() => setFlag(true)}>Edit</button>
-            {flag && <EditUser editUser={updateUser} user={user} />}
-            <button onClick={() => addNewStar(user)}>AAAA</button>
+            <div className="user-info">
+              <h3>{user.username}</h3>
+              <p>Email: {user.email}</p>
+              <p>Age: {user.age}</p>
+            </div>
+
+            <div className="user-actions">
+              <button onClick={() => setFlag(true)} className="edit-button">
+                Edit
+              </button>
+              {flag && <EditUser editUser={updateUser} user={user} />}
+
+              <button onClick={() => addNewStar(user)} className="star-button">
+                Add Star
+              </button>
+            </div>
           </div>
         ))}
       </div>
