@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import NewUser from "./NewUser";
 import EditUser from "./EditUser";
 import StarsUsers from "./StarsUsers";
+import { NavLink } from "react-router-dom";
 interface User {
   id?: string;
   username: string;
@@ -27,6 +28,8 @@ export default function DisplayUsers({
 
   return (
     <>
+      <NavLink to={"/users/adduser"}>Add user</NavLink>
+
       <div className="card-list">
         {users.map((user) => (
           <div key={user.id} className="card">

@@ -3,6 +3,7 @@ import { v4 } from "uuid";
 import NewUser from "./NewUser";
 import DisplayUsers from "./DisplayUsers";
 import StarsUsers from "./StarsUsers";
+import { Route, Routes } from "react-router-dom";
 interface User {
   id?: string;
   username: string;
@@ -38,14 +39,20 @@ export default function Users() {
   };
   return (
     <>
-      <DisplayUsers
-        users={users}
-        deleteUser={deleteUser}
-        updateUser={UpdateUser}
-        addNewStar={addNewStar}
-      />
-      {stars && <StarsUsers users={stars} />}
-      <NewUser addUser={addNewUser} />
+      <Routes>
+        <Route
+          path="/"
+          element={
+            <DisplayUsers
+              users={users}
+              deleteUser={deleteUser}
+              updateUser={UpdateUser}
+              addNewStar={addNewStar}
+            />
+          }
+        />
+        <Route path="/adduser" element={<NewUser addUser={addNewUser} />} />
+      </Routes>
     </>
   );
 }

@@ -1,12 +1,14 @@
-import React from "react";
+import React, { Children } from "react";
 import Users from "../../users/Users";
 
-export default function Main() {
+interface Props {
+  children: React.ReactNode;
+}
+
+export default function Main({ children }: Props) {
   return (
     <>
-      <main>
-        <Users />
-      </main>
+      <main>{children}</main>
     </>
   );
 }
