@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from "react";
-import { Link, NavLink } from "react-router-dom";
+import { Link, NavLink, useNavigate } from "react-router-dom";
 
 interface User {
   id?: string;
@@ -15,11 +15,14 @@ interface Props {
 }
 
 const EditUser: React.FC<Props> = ({ user, editUser }: Props) => {
+  const navigate = useNavigate();
+
   const [username, setUsername] = useState("");
   const [email, setEmail] = useState("");
   const [age, setAge] = useState(0);
   const [img, setImg] = useState("");
   const id: string | undefined = user.id;
+
   useEffect(() => {
     setUsername(user.username);
     setEmail(user.email);
@@ -36,6 +39,7 @@ const EditUser: React.FC<Props> = ({ user, editUser }: Props) => {
       age,
       img,
     });
+    navigate("/users");
   };
   return (
     <>
@@ -94,9 +98,7 @@ const EditUser: React.FC<Props> = ({ user, editUser }: Props) => {
             />
           </div>
 
-          <button type="submit">
-            <NavLink to={"/users"}>Save!!</NavLink>
-          </button>
+          <button type="submit">Save!!</button>
         </form>
       </div>
     </>

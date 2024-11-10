@@ -33,8 +33,12 @@ export default function Users() {
   const deleteUser = (id: string) => {
     setusers(users.filter((user) => user.id !== id));
   };
-  const UpdateUser = (user: User) => {
-    console.log(user);
+  const UpdateUser = (updatedUser: User) => {
+    setusers((prevUsers) =>
+      prevUsers.map((user) =>
+        user.id === updatedUser.id ? { ...user, ...updatedUser } : user
+      )
+    );
   };
 
   const updateSetUser = (user: User) => {
