@@ -1,8 +1,6 @@
 import React, { useState } from "react";
-import NewUser from "./NewUser";
 import EditUser from "./EditUser";
-import StarsUsers from "./StarsUsers";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 
 interface User {
   id?: string;
@@ -46,12 +44,14 @@ export default function DisplayUsers({
               <p>Email: {user.email}</p>
               <p>Age: {user.age}</p>
             </div>
-
             <div className="user-actions">
-              <button onClick={() => setFlag(true)} className="edit-button">
-                Edit
+              <button
+                onClick={() => {
+                  updateUser(user);
+                }}
+              >
+                <NavLink to={"/users/edit"}>Edit</NavLink>
               </button>
-              {flag && <EditUser editUser={updateUser} user={user} />}
 
               <button onClick={() => addNewStar(user)} className="star-button">
                 Add Star

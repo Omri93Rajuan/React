@@ -4,6 +4,7 @@ import NewUser from "./NewUser";
 import DisplayUsers from "./DisplayUsers";
 import { Route, Routes } from "react-router-dom";
 import StarsUsers from "./StarsUsers";
+import EditUser from "./EditUser";
 interface User {
   id?: string;
   username: string;
@@ -15,6 +16,7 @@ interface User {
 export default function Users() {
   const [users, setusers] = useState<User[]>([]);
   const [stars, setStars] = useState<User[]>([]);
+  const [user, setuser] = useState<User>();
 
   useEffect(() => {
     fetch("/data.json")
@@ -34,6 +36,10 @@ export default function Users() {
   const UpdateUser = (user: User) => {
     console.log(user);
   };
+
+  const updateSetUser = (user: User) => {
+    setuser(user);
+  };
   const addNewStar = (newStar: User) => {
     setStars([...stars, newStar]);
   };
@@ -47,12 +53,16 @@ export default function Users() {
             <DisplayUsers
               users={users}
               deleteUser={deleteUser}
-              updateUser={UpdateUser}
+              updateUser={updateSetUser}
               addNewStar={addNewStar}
             />
           }
         />
         <Route path="/adduser" element={<NewUser addUser={addNewUser} />} />
+        <Route
+          path="/edit"
+          element={<EditUser user={user!} editUser={UpdateUser} />}
+        />
       </Routes>
     </>
   );

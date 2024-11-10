@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from "react";
+import { Link, NavLink } from "react-router-dom";
 
 interface User {
   id?: string;
@@ -13,48 +14,93 @@ interface Props {
   editUser: (user: User) => void;
 }
 
-const EditUserForm: React.FC<Props> = ({ user, editUser }) => {
-  const [username, setUsername] = useState(user.username);
-  const [email, setEmail] = useState(user.email);
-  const [age, setAge] = useState(user.age);
-
+const EditUser: React.FC<Props> = ({ user, editUser }: Props) => {
+  const [username, setUsername] = useState("");
+  const [email, setEmail] = useState("");
+  const [age, setAge] = useState(0);
+  const [img, setImg] = useState("");
+  const id: string | undefined = user.id;
   useEffect(() => {
     setUsername(user.username);
     setEmail(user.email);
     setAge(user.age);
-  }, [user]);
+    setImg(user.img);
+  }, []);
 
-  const handleSubmit = () => {
-    // יצירת אובייקט חדש עם הנתונים המעודכנים
-    const updatedUser = {
-      ...user,
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    editUser({
+      id,
       username,
       email,
       age,
-    };
-    editUser(updatedUser); // שולחים את המשתמש המעודכן לפונקציה editUser
+      img,
+    });
   };
-
   return (
-    <div>
-      <input
-        type="text"
-        value={username}
-        onChange={(e) => setUsername(e.target.value)}
-      />
-      <input
-        type="email"
-        value={email}
-        onChange={(e) => setEmail(e.target.value)}
-      />
-      <input
-        type="number"
-        value={age}
-        onChange={(e) => setAge(parseInt(e.target.value))}
-      />
-      <button onClick={handleSubmit}>Save</button>
-    </div>
+    <>
+      <div className="form-container">
+        <form onSubmit={handleSubmit}>
+          <div className="form-group">
+            <label htmlFor="userName">User Name</label>
+            <input
+              id="userName"
+              type="text"
+              value={username}
+              placeholder="Enter your User Name"
+              onChange={(event) => {
+                setUsername(event.target.value);
+              }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="email">Email</label>
+            <input
+              id="email"
+              type="text"
+              value={email}
+              placeholder="Enter your Email"
+              onChange={(event) => {
+                setEmail(event.target.value);
+              }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="img">Img</label>
+            <input
+              id="img"
+              type="text"
+              value={img}
+              placeholder="Enter your Pic"
+              onChange={(event) => {
+                setImg(event.target.value);
+              }}
+            />
+          </div>
+
+          <div className="form-group">
+            <label htmlFor="age">Age</label>
+            <input
+              id="age"
+              type="number"
+              min={0}
+              value={age}
+              placeholder="0"
+              onChange={(event) => {
+                setAge(Number(event.target.value));
+              }}
+            />
+          </div>
+
+          <button type="submit">
+            <NavLink to={"/users"}>Save!!</NavLink>
+          </button>
+        </form>
+      </div>
+    </>
   );
 };
 
-export default EditUserForm;
+export default EditUser;
