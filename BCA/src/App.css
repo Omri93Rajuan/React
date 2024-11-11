@@ -221,3 +221,7 @@ ul{
   display: flex;
   justify-content: space-evenly;
 }
+
+hr{
+  color: blue;
+}

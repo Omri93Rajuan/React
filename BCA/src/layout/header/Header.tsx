@@ -1,5 +1,5 @@
 import React from "react";
-import Link_nav_bar from "../../users/components/Link_nav_bar";
+import Link_nav_bar from "../../components/Link_nav_bar";
 
 export default function Header() {
   return (
@@ -17,6 +17,10 @@ export default function Header() {
           <li>
             {" "}
             <Link_nav_bar to="/about" InnerText="About" />
+          </li>
+          <li>
+            {" "}
+            <Link_nav_bar to="/users/display" InnerText="Display" />
           </li>
         </ul>
       </header>

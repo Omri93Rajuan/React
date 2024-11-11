@@ -1,6 +1,5 @@
-import React, { useState } from "react";
-import EditUser from "./EditUser";
-import { Link, NavLink } from "react-router-dom";
+import { NavLink } from "react-router-dom";
+import PageHeader from "../components/PageHeader";
 
 interface User {
   id?: string;
@@ -17,16 +16,13 @@ interface Props {
   addNewStar: (user: User) => void;
 }
 
-export default function DisplayUsers({
-  users,
-  deleteUser,
-  updateUser,
-  addNewStar,
-}: Props) {
-  const [flag, setFlag] = useState(false);
-
+export default function DisplayUsers({ users, updateUser, addNewStar }: Props) {
   return (
     <>
+      <PageHeader
+        title="Users Page"
+        subtitle="This is the main page of users"
+      />
       <NavLink to={"/users/adduser"} className="add-user-link">
         Add user
       </NavLink>
