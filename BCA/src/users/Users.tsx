@@ -5,7 +5,6 @@ import DisplayUsers from "./DisplayUsers";
 import { Route, Routes } from "react-router-dom";
 import StarsUsers from "./StarsUsers";
 import EditUser from "./EditUser";
-import DisplayUsers2 from "./DisplayUsers2";
 interface User {
   id?: string;
   username: string;
@@ -63,9 +62,7 @@ export default function Users() {
           }
         />
         <Route path="/adduser" element={<NewUser addUser={addNewUser} />} />
-        <Route path="/edit/:id" element={<EditUser editUser={UpdateUser} />} />
-
-        <Route path="/display" element={<DisplayUsers2 />} />
+        <Route path="/edit/:id" element={<EditUser />} />
       </Routes>
     </>
   );

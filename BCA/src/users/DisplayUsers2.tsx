@@ -1,4 +1,4 @@
-import React, { useContext } from "react";
+import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import PageHeader from "../components/PageHeader";
 import { UserContext } from "../providers/UserProvider";
@@ -6,7 +6,7 @@ import { UserContext } from "../providers/UserProvider";
 export default function DisplayUsers2() {
   // step 4
   // Use the useContext
-  const { users } = useContext(UserContext);
+  const { users, setUsers } = useContext(UserContext);
 
   return (
     <>
@@ -31,6 +31,13 @@ export default function DisplayUsers2() {
               <p>Email: {user.email}</p>
               <p>Age: {user.age}</p>
             </div>
+            <button
+              onClick={() => {
+                setUsers(users.filter((prevUser) => prevUser.id !== user.id));
+              }}
+            >
+              Delete
+            </button>
             <div className="user-actions"></div>
           </div>
         ))}
