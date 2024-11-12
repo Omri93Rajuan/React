@@ -4,6 +4,7 @@ import { UserContext } from "../providers/UserProvider";
 
 const EditUser: React.FC = () => {
   const { setUsers, users } = useContext(UserContext);
+
   const { id } = useParams();
 
   const navigate = useNavigate();

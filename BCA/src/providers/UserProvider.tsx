@@ -28,9 +28,12 @@ export default function UserProvider({ children }: Props) {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    fetch("/data.json")
+    fetch("")
       .then((response) => response.json())
-      .then((data) => setUsers(data))
+      .then((data) => {
+        setUsers(data);
+        console.log(data);
+      })
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
