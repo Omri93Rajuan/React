@@ -1,6 +1,6 @@
-import React, { useState, useContext, useEffect } from "react";
-import { AuthContext } from "../providers/authProvider";
-import { useNavigate, useLocation } from "react-router-dom";
+import React, { useState, useContext } from "react";
+import { AuthContext } from "../providers/AuthProvider";
+import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const { user, login } = useContext(AuthContext) ?? {};
@@ -9,33 +9,17 @@ const LoginPage = () => {
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
-  const [isLoading, setIsLoading] = useState(false);
 
   const navigate = useNavigate();
-  const location = useLocation();
-
-  useEffect(() => {
-    if (user && !isLoading) {
-      const redirectTo = location.state?.from || "/";
-      navigate(redirectTo, { replace: true });
-    }
-  }, [user, navigate, location, isLoading]);
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    if (!email.trim() || !password.trim()) {
-      setError("נא למלא את כל השדות");
-      return;
-    }
-
     setError("");
-    setIsLoading(true);
-
     try {
       const success = await login!(email, password);
       if (success) {
-        // המשתמש יועבר דרך useEffect
+        navigate("/");
       } else {
         setError("שם משתמש או סיסמה לא נכונים");
         setPassword("");
@@ -43,8 +27,6 @@ const LoginPage = () => {
     } catch (err) {
       setError("אירעה שגיאה בהתחברות. אנא נסה שנית");
       setPassword("");
-    } finally {
-      setIsLoading(false);
     }
   };
 
@@ -62,8 +44,6 @@ const LoginPage = () => {
               value={email}
               onChange={(e) => setEmail(e.target.value)}
               required
-              disabled={isLoading}
-              dir="ltr"
             />
           </div>
 
@@ -76,27 +56,12 @@ const LoginPage = () => {
               value={password}
               onChange={(e) => setPassword(e.target.value)}
               required
-              disabled={isLoading}
-              dir="ltr"
             />
           </div>
 
           {error && <div className="error-message">{error}</div>}
 
-          <button
-            type="submit"
-            className={`login-button ${isLoading ? "loading" : ""}`}
-            disabled={isLoading}
-          >
-            {isLoading ? (
-              <div className="loading-spinner">
-                <div className="spinner"></div>
-                <span>מתחבר...</span>
-              </div>
-            ) : (
-              "Login"
-            )}
-          </button>
+          <button type="submit">"Login"</button>
         </form>
       </div>
     </div>

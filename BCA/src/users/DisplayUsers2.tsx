@@ -7,7 +7,7 @@ import { starsContext } from "../providers/StarsProvider";
 export default function DisplayUsers2() {
   // step 4
   // Use the useContext
-  const { users, setUsers } = useContext(UserContext);
+  const { users, setUsers } = useContext(UserContext) ?? {};
   const { stars, setStars } = useContext(starsContext);
 
   return (

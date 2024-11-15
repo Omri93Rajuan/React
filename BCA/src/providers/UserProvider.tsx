@@ -19,21 +19,17 @@ interface UserProps {
 
 // Step 1
 // Create Context
-export const UserContext = React.createContext<UserProps>({
-  users: [],
-  setUsers: () => {},
-});
+export const UserContext = React.createContext<UserProps | undefined>(
+  undefined
+);
 
 export default function UserProvider({ children }: Props) {
   const [users, setUsers] = useState<User[]>([]);
 
   useEffect(() => {
-    fetch("")
+    fetch("http://localhost:7700/data")
       .then((response) => response.json())
-      .then((data) => {
-        setUsers(data);
-        console.log(data);
-      })
+      .then((data) => setUsers(data))
       .catch((error) => console.error("Error fetching data:", error));
   }, []);
 
