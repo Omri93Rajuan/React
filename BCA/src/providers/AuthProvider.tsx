@@ -1,4 +1,5 @@
 import React, { createContext, useState, ReactNode } from "react";
+import { useError } from "./ErrorProvider";
 
 interface User {
   _id: string;
@@ -18,17 +19,20 @@ export const AuthContext = createContext<AuthContextType | undefined>(
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
+  const { setError } = useError(); // שימוש ב-ErrorContext
 
   const login = async (email: string, password: string): Promise<boolean> => {
     try {
       const response = await fetch("http://localhost:7700/auth/login", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
-        credentials: "include", // חשוב בשביל קבלת הקוקיז
+        credentials: "include",
         body: JSON.stringify({ email, password }),
       });
 
       if (!response.ok) {
+        const errorMessage = `Login failed with status: ${response.status}`;
+        setError(errorMessage); // הגדרת הודעת שגיאה
         return false;
       }
 
@@ -37,9 +41,10 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
         setUser(data.foundUser);
         return true;
       }
+      setError("User not found");
       return false;
     } catch (error) {
-      console.error("Login failed", error);
+      setError("Network error: Unable to login");
       return false;
     }
   };
@@ -53,9 +58,11 @@ export const AuthProvider = ({ children }: { children: ReactNode }) => {
 
       if (response.ok) {
         setUser(null);
+      } else {
+        setError("Failed to log out");
       }
     } catch (error) {
-      console.error("Logout failed", error);
+      setError("Network error: Unable to logout");
     }
   };
 

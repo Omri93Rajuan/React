@@ -11,11 +11,7 @@ import UserProvider, { UserContext } from "./providers/UserProvider.tsx";
 createRoot(document.getElementById("root")!).render(
   <StrictMode>
     <BrowserRouter>
-      <AuthProvider>
-        <UserProvider>
-          <App />
-        </UserProvider>
-      </AuthProvider>
+      <App />
     </BrowserRouter>
   </StrictMode>
 );
