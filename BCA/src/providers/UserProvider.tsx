@@ -1,21 +1,22 @@
 import React, { useEffect, useState } from "react";
 import useFetch from "../hooks/useFetch";
 
-interface User {
-  id?: string;
-  username: string;
+interface IUser {
+  fullName: string;
   email: string;
-  age: number;
-  img: string;
+  password: string;
+  phone: string;
+  isAdmin: boolean;
+  image?: string;
+  createdAt: Date;
 }
-
 interface Props {
   children: React.ReactNode;
 }
 
 interface UserProps {
-  users: User[];
-  setUsers: React.Dispatch<React.SetStateAction<User[]>>;
+  users: IUser[];
+  setUsers: React.Dispatch<React.SetStateAction<IUser[]>>;
 }
 
 // Step 1: Create Context
@@ -24,15 +25,18 @@ export const UserContext = React.createContext<UserProps | undefined>(
 );
 
 export default function UserProvider({ children }: Props) {
-  const [users, setUsers] = useState<User[]>([]);
+  const [users, setUsers] = useState<IUser[]>([]);
 
-  const { data, error, POST, GET } = useFetch<User[]>(
-    "http://localhost:7074/data"
-  );
+  const { data, GET } = useFetch<IUser[]>("http://localhost:7074/data");
 
-  if (error) {
-    console.error("Error fetching data:", error);
-  }
+  useEffect(() => {
+    GET();
+  }, []);
+
+  useEffect(() => {
+    if (data) return setUsers(data);
+    console.log("No data Brooooo...");
+  }, [data]);
 
   return (
     <UserContext.Provider value={{ users, setUsers }}>

@@ -7,7 +7,9 @@ export default function useFetch<T>(url: string): any {
   //   ----------GET method----------
   const GET = async () => {
     try {
-      const response = await fetch(url);
+      const response = await fetch(url, {
+        credentials: "include",
+      });
       if (!response.ok) {
         const errorData = await response.json();
         throw new Error(`HTTP error! ${errorData.error.message}`);
