@@ -4,28 +4,29 @@ import { useNavigate } from "react-router-dom";
 
 const LoginPage = () => {
   const { user, login } = useContext(AuthContext) ?? {};
+  const navigate = useNavigate();
 
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
 
   const [error, setError] = useState("");
 
-  const navigate = useNavigate();
-
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
 
-    setError("");
+    setError(""); // איפוס שגיאה קודמת
+
     try {
-      const success = await login!(email, password);
+      const success = await login?.({ email, password });
       if (success) {
         navigate("/");
       } else {
         setError("שם משתמש או סיסמה לא נכונים");
-        setPassword("");
       }
     } catch (err) {
+      console.error("Login error:", err);
       setError("אירעה שגיאה בהתחברות. אנא נסה שנית");
+    } finally {
       setPassword("");
     }
   };

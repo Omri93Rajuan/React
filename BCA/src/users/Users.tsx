@@ -6,6 +6,8 @@ import { Route, Routes } from "react-router-dom";
 import StarsUsers from "./StarsUsers";
 import EditUser from "./EditUser";
 import DisplayUsers2 from "./DisplayUsers2";
+import PrivateRoute from "../components/ProtectionRoutes/PrivateRoute";
+import UserProvider from "../providers/UserProvider";
 interface User {
   id?: string;
   username: string;
@@ -16,7 +18,9 @@ interface User {
 
 export default function Users() {
   const [users, setusers] = useState<User[]>([]);
+
   const [stars, setStars] = useState<User[]>([]);
+
   const [user, setuser] = useState<User>();
 
   useEffect(() => {
@@ -63,7 +67,14 @@ export default function Users() {
           }
         />
         <Route path="/adduser" element={<NewUser addUser={addNewUser} />} />
-        <Route path="/edit/:id" element={<EditUser />} />
+        <Route
+          path="/edit/:id"
+          element={
+            <PrivateRoute>
+              <EditUser />
+            </PrivateRoute>
+          }
+        />
         <Route path="/display" element={<DisplayUsers2 />} />
       </Routes>
     </>

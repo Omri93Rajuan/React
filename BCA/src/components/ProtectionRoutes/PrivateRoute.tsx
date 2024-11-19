@@ -8,13 +8,14 @@ interface PrivateRouteProps {
 }
 
 const PrivateRoute: React.FC<PrivateRouteProps> = ({ children }) => {
-  const authContext = useContext(AuthContext);
-
-  if (!authContext) {
-    throw new Error("AuthContext is not provided");
+  const { user } = useContext(AuthContext) ?? {};
+  const a = ["c", "b", "c"];
+  if (!user) {
+    // console.error("Miki is not provided");
+    // console.log("Miki is not provided");
+    // console.warn("Miki is not provided");
+    // console.table(a);
   }
-
-  const { user } = authContext;
 
   return user ? children : <Navigate to="/login" />;
 };

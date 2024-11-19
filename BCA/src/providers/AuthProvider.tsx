@@ -1,73 +1,82 @@
-import React, { createContext, useState, ReactNode } from "react";
-import { useError } from "./ErrorProvider";
+import React, { createContext, useState, ReactNode, useEffect } from "react";
+import useFetch from "../hooks/useFetch";
 
-interface User {
-  _id: string;
+interface IUser {
+  fullName: string;
   email: string;
-  name?: string;
+  password: string;
+  phone: string;
+  isAdmin: boolean;
+  image?: string;
+  createdAt: Date;
+}
+
+interface UserDto {
+  email: string;
+  password: string;
 }
 
 interface AuthContextType {
-  user: User | null;
-  login: (email: string, password: string) => Promise<boolean>;
+  user: IUser | null;
+  login: (user: UserDto) => Promise<boolean>;
   logout: () => Promise<void>;
 }
 
-export const AuthContext = createContext<AuthContextType | undefined>(
-  undefined
-);
+export const AuthContext = createContext<AuthContextType | null>(null);
 
 export const AuthProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const { setError } = useError(); // שימוש ב-ErrorContext
+  const { POST, data } = useFetch("http://localhost:7074");
 
-  const login = async (email: string, password: string): Promise<boolean> => {
+  const [user, setUser] = useState<IUser | null>(null);
+
+  const [error, setError] = useState<string | null>(null);
+
+  // -----------LOGIN-----------
+  const login = async (userFromClient: UserDto): Promise<boolean> => {
     try {
-      const response = await fetch("http://localhost:7700/auth/login", {
+      const userData = await POST("auth/login", userFromClient);
+      setUser(userData.foundUser);
+      return true;
+    } catch (error) {
+      setError("Login failed. Please try again.");
+      return false;
+    }
+  };
+
+  const logout = async (): Promise<void> => {
+    try {
+      const response = await fetch("http://localhost:7074/auth/logout", {
         method: "POST",
-        headers: { "Content-Type": "application/json" },
         credentials: "include",
-        body: JSON.stringify({ email, password }),
       });
 
       if (!response.ok) {
-        const errorMessage = `Login failed with status: ${response.status}`;
-        setError(errorMessage); // הגדרת הודעת שגיאה
-        return false;
+        const errorData = await response.json();
+        console.error("Logout failed:", errorData.error?.message);
+        return;
       }
 
-      const data = await response.json();
-      if (data.foundUser) {
-        setUser(data.foundUser);
-        return true;
-      }
-      setError("User not found");
-      return false;
+      setUser(null);
     } catch (error) {
-      setError("Network error: Unable to login");
-      return false;
+      console.error("An unexpected error occurred during logout:", error);
     }
   };
 
-  const logout = async () => {
-    try {
-      const response = await fetch("http://localhost:7700/auth/logout", {
-        method: "POST",
-        credentials: "include",
-      });
-
-      if (response.ok) {
-        setUser(null);
-      } else {
-        setError("Failed to log out");
-      }
-    } catch (error) {
-      setError("Network error: Unable to logout");
+  useEffect(() => {
+    if (error) {
+      const timer = setTimeout(() => setError(null), 5000);
+      return () => clearTimeout(timer);
     }
-  };
+  }, [error]);
 
   return (
     <AuthContext.Provider value={{ user, login, logout }}>
+      {error && (
+        <div className="error-message">
+          <h1>{error}</h1>
+          <button onClick={() => setError(null)}>Dismiss</button>
+        </div>
+      )}
       {children}
     </AuthContext.Provider>
   );

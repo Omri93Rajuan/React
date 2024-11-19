@@ -3,17 +3,17 @@ import ErrorDisplay from "./components/ErrorDisplay";
 import Layout from "./layout/Layout";
 import { AuthProvider } from "./providers/AuthProvider";
 import { ErrorProvider } from "./providers/ErrorProvider";
+import UserProvider from "./providers/UserProvider";
 import AppRouter from "./router/AppRouter";
 
 function App() {
   return (
     <>
-      <ErrorProvider>
-        <AuthProvider>
-          <ErrorDisplay />
+      <AuthProvider>
+        <UserProvider>
           <Layout children={<AppRouter />} />
-        </AuthProvider>
-      </ErrorProvider>
+        </UserProvider>
+      </AuthProvider>
     </>
   );
 }
